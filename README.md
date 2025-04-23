@@ -11,7 +11,7 @@ Một số **công cụ** có thể được thiết kế riêng cho **red teami
 > 🔗 Nếu bạn là Blue Teamer, hãy xem xét [**BlueTeam-Tools**](https://github.com/A-poc/BlueTeam-Tools)
 
 > **Cảnh báo**
-> *Đây là 1 bản port Việt Hoá và thêm 1 số lưu ý từ dự án [**BlueTeam-Tools**](https://github.com/A-poc/BlueTeam-Tools) và [**RedTeam-Tools**](https://github.com/A-poc/RedTeam-Tools)
+> *Đây là 1 bản port Việt Hoá và thêm 1 số lưu ý từ dự án [**BlueTeam-Tools**](https://github.com/A-poc/BlueTeam-Tools) và [**RedTeam-Tools**](https://github.com/A-poc/RedTeam-Tools)*
 > *Các tài liệu trong kho lưu trữ này chỉ dành cho mục đích thông tin và giáo dục. Chúng không nhằm mục đích sử dụng trong bất kỳ hoạt động bất hợp pháp nào.*
 
 > **Ghi chú**
