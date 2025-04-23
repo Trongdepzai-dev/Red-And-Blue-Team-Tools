@@ -8,7 +8,7 @@ Kho lưu trữ Github này chứa một bộ sưu tập hơn **150+** **công c�
 
 Một số **công cụ** có thể được thiết kế riêng cho **red teaming**, trong khi những **công cụ** khác có tính chất tổng quát hơn và có thể được điều chỉnh để sử dụng trong bối cảnh **red teaming**.
 
-> 🔗 Nếu bạn là Blue Teamer, hãy xem xét [**BlueTeam-Tools**](https://github.com/A-poc/BlueTeam-Tools)
+> 🔗 Nếu bạn là Blue Teamer, hãy xem xét [**BlueTeam-Tools**](https://github.com/Trongdepzai-dev/BlueTeam-Tools-VietNamese)
 
 > **Cảnh báo**
 > 
