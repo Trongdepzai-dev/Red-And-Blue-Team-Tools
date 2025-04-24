@@ -6,9 +6,9 @@
 
 Kho lưu trữ Github này chứa một bộ sưu tập hơn **150+** **công cụ** và **nguồn tài nguyên** hữu ích cho các **hoạt động red teaming**.
 
-Một số **công cụ** có thể được thiết kế riêng cho **red teaming**, trong khi những **công cụ** khác có tính chất tổng quát hơn và có thể được điều chỉnh để sử dụng trong bối cảnh **red teaming**.
+Một số **công cụ** có thể được thiết kế riêng cho **red teaming**, trong khi những **công cụ** khác có tính chất tổng quát hơn và có thể được điều chỉnh để sử dụng cho **red teaming**.
 
-> 🔗 Nếu bạn là Blue Teamer, hãy xem xét [**BlueTeam-Tools**](https://github.com/Trongdepzai-dev/BlueTeam-Tools-VietNamese)
+> 🔗 Nếu bạn là Blue Teamer, hãy xem bài viết về [**BlueTeam-Tools**](https://github.com/Trongdepzai-dev/BlueTeam-Tools-VietNamese)
 
 > **Cảnh báo**
 > 
@@ -20,7 +20,7 @@ Một số **công cụ** có thể được thiết kế riêng cho **red teami
 >
 > *Ẩn các tiêu đề của **Danh sách công cụ** bằng mũi tên.*
 >
-> *Nhấn 🔙 để quay lại danh sách. **Có thể 1 số cái không hoạt động***
+> *Nhấn 🔙 để quay lại danh sách. Có thể 1 số cái không hoạt động như mong muốn*
 
 # **Danh sách công cụ**
 
