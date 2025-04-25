@@ -1,11 +1,11 @@
 # **RedTeam-Tools**
-[![GitHub stars](https://img.shields.io/badge/stars-35054-blue?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020/stargazers)
-[![GitHub forks](https://img.shields.io/badge/forks-0-blue?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020/network/members)
-[![GitHub license](https://img.shields.io/github/license/Trongdepzai-dev/Hack-quiz2020)]
-[![Rating](https://img.shields.io/badge/rating-4.8%20stars-yellowgreen?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020)
-[![Code Quality](https://img.shields.io/badge/code%20quality-A%2B-blue?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020/releases/tag/v1.0.0)
-[![Activity Level](https://img.shields.io/badge/activity%20level-high-brightgreen?style=social)](https://github.com/Trongdepzai-dev/Hack-quiz2020)
+![GitHub stars](https://img.shields.io/badge/stars-35054-blue?style=social)
+![GitHub forks](https://img.shields.io/badge/forks-0-blue?style=social)
+![GitHub license](https://img.shields.io/github/license/Trongdepzai-dev/Hack-quiz2020)
+![Rating](https://img.shields.io/badge/rating-4.8%20stars-yellowgreen?style=social)
+![Code Quality](https://img.shields.io/badge/code%20quality-A%2B-blue?style=social)
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=social)
+![Activity Level](https://img.shields.io/badge/activity%20level-high-brightgreen?style=social)
 <p align="center">
 <img src="https://user-images.githubusercontent.com/100603074/210680426-20a92131-56f9-43ad-be82-f449e3215dda.png" height="300">
 </p>
